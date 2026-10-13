@@ -9,6 +9,8 @@
 # Importing Python libraries
 import requests
 from bs4 import BeautifulSoup
+#for handling relative URLs
+from urllib.parse import urljoin 
 
 # Defining the seed URL
 seed = "https://testingurl.dev/scraping/links/circular"
@@ -34,8 +36,6 @@ while frontier:
         print(heading.get_text())
 
     # Extracting and processing hyperlinks
-    from urllib.parse import urljoin
-
     links = soup.find_all("a")
     for link in links:
         href = link.get("href")
