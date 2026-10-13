@@ -26,22 +26,26 @@ while frontier:
 
     # Retrieving and parsing the Web page
     response = requests.get(url)
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-    except requests.RequestException:
-        return None
-
     soup = BeautifulSoup(response.text, "html.parser")
-    
+
     # Printing the text contained in the <h1> element
     heading = soup.find("h1")
     if heading:
         print(heading.get_text())
 
     # Extracting and processing hyperlinks
-    # --> add your Python code here
+    from urllib.parse import urljoin
+
+    links = soup.find_all("a")
+    for link in links:
+        href = link.get("href")
+        if href:
+            absolute_url = urljoin(url, href)
+            if absolute_url.startswith(seed) and absolute_url not in seen:
+                seen.append(absolute_url)
+                frontier.append(absolute_url)
 
 
 # Printing all URLs in seen
-# --> add your Python code here
+for url in seen:
+    print(url)
