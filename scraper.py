@@ -12,26 +12,27 @@ from bs4 import BeautifulSoup
 
 # Defining the seed URL
 seed = "https://testingurl.dev/scraping/links/circular"
-baseURL = "https://testingurl.dev"
 
 # Creating the frontier and seen collections
-# --> add your Python code here
+frontier = [seed]
+seen = [seed]
 
 
 # Crawling until the frontier is empty
 while frontier:
 
     # Removing the first URL from the frontier
-    # --> add your Python code here
-
+    url = frontier.pop(0)
 
     # Retrieving and parsing the Web page
-    # --> add your Python code here
-
+    response = requests.get(url)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "html.parser")
 
     # Printing the text contained in the <h1> element
-    # --> add your Python code here
-
+    heading = soup.find("h1")
+    if heading:
+        print(heading.get_text())
 
     # Extracting and processing hyperlinks
     # --> add your Python code here
