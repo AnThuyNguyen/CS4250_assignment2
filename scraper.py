@@ -26,9 +26,14 @@ while frontier:
 
     # Retrieving and parsing the Web page
     response = requests.get(url)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+    except requests.RequestException:
+        return None
 
+    soup = BeautifulSoup(response.text, "html.parser")
+    
     # Printing the text contained in the <h1> element
     heading = soup.find("h1")
     if heading:
